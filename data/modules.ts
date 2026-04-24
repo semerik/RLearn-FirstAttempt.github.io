@@ -11,8 +11,8 @@ export const MODULES: Module[] = [
         id: 'descripcion',
         name: 'Descripción del módulo y comandos base',
         theory: `
-          <p>Este módulo te lleva desde la primera ejecución de código hasta la creación de objetos simples. La idea es que el usuario pueda abrir R o RStudio, escribir instrucciones, ejecutar resultados y entender qué está pasando en la consola.</p>
-          <p>Si tu interfaz selecciona el primer tema al hacer click en un módulo, este bloque funciona como la pantalla inicial del módulo: resume el objetivo general y presenta los comandos que aparecerán con más frecuencia.</p>
+          <p>Este módulo te lleva desde la primera ejecución de código hasta la creación de objetos simples. La idea es que el estudiante pueda abrir R o RStudio, escribir instrucciones, ejecutar resultados y entender qué está pasando en la consola.</p>
+          <p>Antes de avanzar, conviene reconocer algunos términos que aparecerán todo el tiempo: <strong>variable</strong> (nombre que guarda un valor), <strong>vector</strong> (colección ordenada de valores), <strong>función</strong> (instrucción que recibe datos y devuelve un resultado), <strong>objeto</strong> (cualquier valor guardado en R) y <strong>librería</strong> (paquete que se carga para usar herramientas extra).</p>
           <p><strong>Comandos y palabras clave que usarás aquí:</strong></p>
           <ul style="padding-left:20px;line-height:2.1;margin:10px 0">
             <li><code class="inline">print()</code> — muestra resultados en consola de forma explícita.</li>
@@ -23,6 +23,17 @@ export const MODULES: Module[] = [
             <li><code class="inline">getwd()</code> y <code class="inline">setwd()</code> — consultan y cambian el directorio de trabajo.</li>
             <li><code class="inline">ls()</code> y <code class="inline">rm()</code> — listan y eliminan objetos del entorno.</li>
           </ul>
+          <pre class="code-block"># Comentarios: no se ejecutan
+x &lt;- 10
+y &lt;- 5
+print(x + y)
+
+# c() combina valores en un vector
+nombres &lt;- c("Ana", "Luis", "Marta")
+print(nombres)
+
+# cat() une texto y lo imprime seguido
+cat("Hola", "estudiante", "de", "R\n")</pre>
           <div class="note-box">En R, todo lo que escribes en consola se evalúa de arriba hacia abajo. Primero se crea el objeto, luego se puede imprimir, revisar o reutilizar en otros cálculos.</div>
         `,
         exercises: [
@@ -136,6 +147,20 @@ rep(3, times = 4)</pre>
             description: 'Crea el vector <code class="inline">c("Na", "K", "Ca")</code> e imprime su longitud con <code class="inline">length()</code>.',
             expected: '[1] 3',
             hint: 'elementos <- c("Na", "K", "Ca"); print(length(elementos))',
+          },
+          {
+            id: 'e1_11',
+            title: 'Suma de un vector',
+            description: 'Crea el vector <code class="inline">c(1, 3, 5, 7)</code> y calcula su suma con <code class="inline">sum()</code>.',
+            expected: '[1] 16',
+            hint: 'v <- c(1,3,5,7); print(sum(v))',
+          },
+          {
+            id: 'e1_12',
+            title: 'Secuencia y redondeo',
+            description: 'Imprime una secuencia del <code class="inline">1</code> al <code class="inline">5</code> con <code class="inline">seq()</code> y luego redondea <code class="inline">8/3</code> a dos decimales.',
+            expected: '[1] 1 2 3 4 5',
+            hint: 'print(seq(1, 5)); print(round(8/3, 2))',
           },
         ],
       },
@@ -450,7 +475,7 @@ repeat {
             title: 'Múltiplos con for',
             description: 'Usa un bucle <code class="inline">for</code> para imprimir los primeros 5 múltiplos de 3.',
             expected: '3\n6\n9\n12\n15',
-            hint: 'for(i in 1:5){ cat(i*3, "\n") }',
+            hint: 'for(i in 1:5){ cat(i*3, \"\n\") }',
           },
           {
             id: 'e3_6',
@@ -458,6 +483,20 @@ repeat {
             description: 'Calcula la suma de 1 a 5 usando <code class="inline">while</code> e imprime el total final.',
             expected: '[1] 15',
             hint: 'total <- 0; i <- 1; while(i <= 5){ total <- total + i; i <- i + 1 }; print(total)',
+          },
+          {
+            id: 'e3_11',
+            title: 'Triángulo normal con for',
+            description: 'Usa un bucle for para imprimir un triángulo de asteriscos ascendente con 4 filas alineado a la derecha.',
+            expected: '       *\n      ***\n     ******\n    ********',
+            hint: 'for(i in c(1,3,6,8)){ cat(strrep(" ", 8 - i), strrep("*", i), "\\n", sep="") }',
+          },
+          {
+            id: 'e3_12',
+            title: 'Triángulo invertido con for',
+            description: 'Usa un bucle for para imprimir un triángulo de asteriscos invertido alineado a la derecha.',
+            expected: '    ********\n     ******\n      ***\n       *',
+            hint: 'for(i in c(8,6,3,1)){ cat(strrep(" ", 8 - i), strrep("*", i), "\\n", sep="") }',
           },
         ],
       },
