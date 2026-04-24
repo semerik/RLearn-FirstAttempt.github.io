@@ -1,101 +1,396 @@
 import type { Module } from '~/types'
 
 export const MODULES: Module[] = [
-  // ── MÓDULO 1: LÓGICA BÁSICA ──────────────────────────────
   {
     id: 'mod1',
     num: '01',
-    name: 'LÓGICA BÁSICA',
-    description: 'Fundamentos de programación en R',
+    name: 'Introducción a R y entorno',
+    description: 'Primer contacto con R, la consola, los scripts y los objetos básicos del lenguaje.',
     topics: [
       {
-        id: 'tipos',
-        name: 'Tipos de Datos',
+        id: 'descripcion',
+        name: 'Descripción del módulo y comandos base',
         theory: `
-          <p>En R, los tipos de datos fundamentales son la base de todo programa. Los principales son:</p>
-          <ul style="padding-left:20px;line-height:2.2;margin:10px 0">
-            <li><strong style="color:var(--orange)">numeric</strong> — números reales: <code class="inline">3.14</code>, <code class="inline">-2.5</code></li>
-            <li><strong style="color:var(--orange)">integer</strong> — enteros: <code class="inline">1L</code>, <code class="inline">42L</code></li>
-            <li><strong style="color:var(--orange)">character</strong> — texto: <code class="inline">"hola"</code>, <code class="inline">'R'</code></li>
-            <li><strong style="color:var(--orange)">logical</strong> — booleanos: <code class="inline">TRUE</code>, <code class="inline">FALSE</code></li>
-            <li><strong style="color:var(--orange)">complex</strong> — complejos: <code class="inline">2+3i</code></li>
+          <p>Este módulo te lleva desde la primera ejecución de código hasta la creación de objetos simples. La idea es que el usuario pueda abrir R o RStudio, escribir instrucciones, ejecutar resultados y entender qué está pasando en la consola.</p>
+          <p>Si tu interfaz selecciona el primer tema al hacer click en un módulo, este bloque funciona como la pantalla inicial del módulo: resume el objetivo general y presenta los comandos que aparecerán con más frecuencia.</p>
+          <p><strong>Comandos y palabras clave que usarás aquí:</strong></p>
+          <ul style="padding-left:20px;line-height:2.1;margin:10px 0">
+            <li><code class="inline">print()</code> — muestra resultados en consola de forma explícita.</li>
+            <li><code class="inline">cat()</code> — imprime texto concatenado, útil para mensajes más limpios.</li>
+            <li><code class="inline">c()</code> — combina valores en un vector.</li>
+            <li><code class="inline">class()</code> — indica la clase de un objeto.</li>
+            <li><code class="inline">help()</code> y <code class="inline">?</code> — abren la ayuda de una función o tema.</li>
+            <li><code class="inline">getwd()</code> y <code class="inline">setwd()</code> — consultan y cambian el directorio de trabajo.</li>
+            <li><code class="inline">ls()</code> y <code class="inline">rm()</code> — listan y eliminan objetos del entorno.</li>
           </ul>
-          <p>Usa <code class="inline">class()</code> para conocer el tipo de un objeto:</p>
-          <pre class="code-block">x &lt;- 42.5
-class(x)        # "numeric"
-
-y &lt;- "química"
-class(y)        # "character"
-
-z &lt;- TRUE
-class(z)        # "logical"
-
-# Conversiones explícitas
-as.integer(3.7) # 3
-as.character(9) # "9"
-as.numeric("5") # 5</pre>
-          <div class="note-box">R convierte tipos automáticamente (coerción implícita). Si mezclas numeric y character, el resultado será character.</div>
+          <div class="note-box">En R, todo lo que escribes en consola se evalúa de arriba hacia abajo. Primero se crea el objeto, luego se puede imprimir, revisar o reutilizar en otros cálculos.</div>
         `,
         exercises: [
           {
             id: 'e1_1',
-            title: 'Identifica tipos de datos',
-            description: 'Crea 3 variables: <code class="inline">masa &lt;- 58.44</code>, <code class="inline">compuesto &lt;- "NaCl"</code>, y <code class="inline">soluble &lt;- TRUE</code>. Luego imprime la clase de cada una usando <code class="inline">class()</code>, una por línea.',
-            expected: '[1] "numeric"\n[1] "character"\n[1] "logical"',
-            hint: 'Usa print(class(masa)), print(class(compuesto)), print(class(soluble)) en líneas separadas.',
+            title: 'Primer mensaje en consola',
+            description: 'Escribe una instrucción que imprima exactamente <code class="inline">"Bienvenido a R"</code> usando <code class="inline">print()</code>.',
+            expected: '[1] "Bienvenido a R"',
+            hint: 'print("Bienvenido a R")',
           },
           {
             id: 'e1_2',
-            title: 'Conversión de tipos',
-            description: 'Convierte el número <code class="inline">7</code> a character con <code class="inline">as.character(7)</code>, guárdalo en <code class="inline">x</code> e imprime <code class="inline">class(x)</code>.',
-            expected: '[1] "character"',
-            hint: 'x <- as.character(7); print(class(x))',
+            title: 'Texto concatenado',
+            description: 'Usa <code class="inline">cat()</code> para mostrar en una sola línea el texto <code class="inline">Aprender R es útil</code>.',
+            expected: 'Aprender R es útil',
+            hint: 'cat("Aprender", "R", "es", "útil")',
           },
         ],
       },
       {
-        id: 'variables',
-        name: 'Variables',
+        id: 'entorno',
+        name: 'Entorno de trabajo, consola y scripts',
         theory: `
-          <p>En R el operador de asignación es <code class="inline">&lt;-</code> (también se puede usar <code class="inline">=</code>, pero la convención es <code class="inline">&lt;-</code>).</p>
-          <pre class="code-block">nombre        &lt;- "Hidrógeno"
-numero_atomico &lt;- 1
-masa_atomica  &lt;- 1.008
-es_metal      &lt;- FALSE
+          <p>R distingue entre la consola, donde ejecutas instrucciones inmediatas, y los scripts, donde guardas código reutilizable. Trabajar con scripts ayuda a organizar ejercicios, repetir análisis y mantener un historial limpio.</p>
+          <pre class="code-block"># Comentarios: no se ejecutan
+x &lt;- 10
+y &lt;- 5
+print(x + y)</pre>
+          <p>Los comentarios empiezan con <code class="inline">#</code>. Son útiles para explicar una línea, dividir secciones o dejar notas para más adelante. El operador <code class="inline">&lt;-</code> crea y asigna objetos.</p>
+          <p>Una rutina básica de trabajo es: abrir el entorno, revisar <code class="inline">getwd()</code>, guardar tu script, ejecutar una sección y verificar el resultado en consola.</p>
+          <div class="note-box">Un buen hábito en R es escribir código corto, legible y dividido por pasos. Eso hace más fácil depurar errores y volver a ejecutar análisis completos.</div>
+        `,
+        exercises: [
+          {
+            id: 'e1_3',
+            title: 'Suma en consola',
+            description: 'Crea las variables <code class="inline">a &lt;- 12</code> y <code class="inline">b &lt;- 8</code>. Luego imprime su suma.',
+            expected: '[1] 20',
+            hint: 'a <- 12; b <- 8; print(a + b)',
+          },
+          {
+            id: 'e1_4',
+            title: 'Restar y multiplicar',
+            description: 'Crea <code class="inline">masa &lt;- 25</code> y <code class="inline">factor &lt;- 4</code>. Imprime el resultado de <code class="inline">masa * factor</code>.',
+            expected: '[1] 100',
+            hint: 'masa <- 25; factor <- 4; print(masa * factor)',
+          },
+        ],
+      },
+      {
+        id: 'objetos',
+        name: 'Objetos, tipos de datos y operadores',
+        theory: `
+          <p>En R todo se guarda en objetos. Los objetos más básicos suelen ser numéricos, enteros, texto o lógicos. Cada tipo permite distintas operaciones y R puede convertirlos automáticamente cuando es necesario.</p>
+          <pre class="code-block">numero &lt;- 3.14
+entero &lt;- 5L
+texto &lt;- "química"
+logico &lt;- TRUE
 
-# R es sensible a mayúsculas:
-Masa &lt;- 10   # distinta de masa</pre>
-          <p>Buenas prácticas de nombrado:</p>
-          <ul style="padding-left:20px;line-height:2;margin:8px 0">
-            <li>snake_case: <code class="inline">masa_molar</code>, <code class="inline">num_moles</code></li>
-            <li>Evitar nombres de funciones: no uses <code class="inline">c</code>, <code class="inline">t</code>, <code class="inline">mean</code></li>
-            <li>Nombres descriptivos: <code class="inline">masa_molar_nacl</code> en lugar de <code class="inline">mm</code></li>
+class(numero)
+class(entero)
+class(texto)
+class(logico)</pre>
+          <p>Operadores importantes: <code class="inline">+</code>, <code class="inline">-</code>, <code class="inline">*</code>, <code class="inline">/</code>, <code class="inline">^</code>, <code class="inline">&lt;-</code> para asignar y <code class="inline">==</code> para comparar. En esta etapa también conviene diferenciar entre creación de objetos y resultado de una operación.</p>
+          <div class="note-box">Si mezclas tipos incompatibles, R suele convertir todo al tipo más general. Por ejemplo, un vector con números y texto termina como carácter.</div>
+        `,
+        exercises: [
+          {
+            id: 'e1_5',
+            title: 'Identifica la clase',
+            description: 'Crea <code class="inline">x &lt;- 12.5</code> e imprime su clase con <code class="inline">class()</code>.',
+            expected: '[1] "numeric"',
+            hint: 'x <- 12.5; print(class(x))',
+          },
+          {
+            id: 'e1_6',
+            title: 'Tipo lógico',
+            description: 'Crea <code class="inline">es_solido &lt;- FALSE</code> e imprime su clase.',
+            expected: '[1] "logical"',
+            hint: 'es_solido <- FALSE; print(class(es_solido))',
+          },
+        ],
+      },
+      {
+        id: 'calculos',
+        name: 'Primeras operaciones matemáticas',
+        theory: `
+          <p>R fue diseñado para trabajar con datos numéricos de forma natural. Sus funciones básicas permiten resumir, medir y transformar valores sin necesidad de escribir lógica compleja.</p>
+          <pre class="code-block">valores &lt;- c(2, 4, 6, 8, 10)
+abs(-7)
+sum(valores)
+mean(valores)
+length(valores)
+round(3.14159, 2)
+seq(1, 5)
+rep(3, times = 4)</pre>
+          <p>Las funciones <code class="inline">sum()</code>, <code class="inline">mean()</code> y <code class="inline">length()</code> aparecen en casi cualquier análisis. <code class="inline">abs()</code> sirve para convertir un valor negativo en positivo, <code class="inline">seq()</code> crea secuencias y <code class="inline">rep()</code> repite valores.</p>
+          <div class="note-box">Cuando trabajes con datos experimentales, estas funciones te ayudan a revisar rápidamente magnitudes, promedios y tamaños de muestra.</div>
+        `,
+        exercises: [
+          {
+            id: 'e1_7',
+            title: 'Promedio simple',
+            description: 'Crea el vector <code class="inline">c(2, 4, 6, 8)</code> y calcula su promedio con <code class="inline">mean()</code>.',
+            expected: '[1] 5',
+            hint: 'datos <- c(2,4,6,8); print(mean(datos))',
+          },
+          {
+            id: 'e1_8',
+            title: 'Cantidad de elementos',
+            description: 'Crea el vector <code class="inline">c("Na", "K", "Ca")</code> e imprime su longitud con <code class="inline">length()</code>.',
+            expected: '[1] 3',
+            hint: 'elementos <- c("Na", "K", "Ca"); print(length(elementos))',
+          },
+        ],
+      },
+      {
+        id: 'ayuda',
+        name: 'Ayuda, documentación y buenas prácticas',
+        theory: `
+          <p>Aprender a consultar la ayuda es tan importante como aprender a escribir código. R trae documentación integrada y cada función puede explorarse desde la consola sin salir del entorno.</p>
+          <pre class="code-block">?sum
+help(mean)
+example(mean)</pre>
+          <p>Además, conviene seguir algunas reglas simples: nombres descriptivos, una sola tarea por bloque, comentarios breves y uso consistente de espacios. Es mejor escribir <code class="inline">masa_molar</code> que <code class="inline">mm</code>, porque así el código se entiende más rápido.</p>
+          <div class="note-box">Las buenas prácticas no cambian el resultado, pero sí reducen errores y hacen que tu trabajo sea mucho más fácil de revisar y ampliar.</div>
+        `,
+        exercises: [
+          {
+            id: 'e1_9',
+            title: 'Usa un nombre descriptivo',
+            description: 'Crea <code class="inline">masa_molar_nacl &lt;- 58.44</code> e imprime el valor.',
+            expected: '[1] 58.44',
+            hint: 'masa_molar_nacl <- 58.44; print(masa_molar_nacl)',
+          },
+          {
+            id: 'e1_10',
+            title: 'Redondeo inicial',
+            description: 'Calcula <code class="inline">round(7/3, 2)</code> e imprímelo.',
+            expected: '[1] 2.33',
+            hint: 'print(round(7/3, 2))',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'mod2',
+    num: '02',
+    name: 'Fundamentos del lenguaje',
+    description: 'Vectores, matrices, listas, factores, texto y funciones propias en R.',
+    topics: [
+      {
+        id: 'base',
+        name: 'Palabras reservadas y funciones fundamentales',
+        theory: `
+          <p>En este módulo vas a usar muchas funciones básicas que ya vienen con R. También aparecen palabras reservadas y estructuras sintácticas que forman parte del lenguaje. Entenderlas desde el inicio evita confusiones cuando el código crezca.</p>
+          <p><strong>Palabras reservadas y funciones que se usarán con frecuencia:</strong></p>
+          <ul style="padding-left:20px;line-height:2.1;margin:10px 0">
+            <li><code class="inline">TRUE</code>, <code class="inline">FALSE</code> y <code class="inline">NA</code> — valores lógicos y faltantes.</li>
+            <li><code class="inline">NULL</code> — representa ausencia de objeto.</li>
+            <li><code class="inline">c()</code> — une valores en un vector.</li>
+            <li><code class="inline">sum()</code> — suma valores numéricos.</li>
+            <li><code class="inline">mean()</code> — calcula el promedio.</li>
+            <li><code class="inline">length()</code> — cuenta elementos.</li>
+            <li><code class="inline">abs()</code> — devuelve el valor absoluto.</li>
+            <li><code class="inline">seq()</code> y <code class="inline">rep()</code> — crean secuencias y repeticiones.</li>
           </ul>
-          <div class="note-box">Asignar con &lt;- en la consola no imprime el valor. Para imprimir, escribe el nombre de la variable o usa print().</div>
+          <div class="note-box">Estas funciones aparecen una y otra vez porque son la base para construir ejemplos, pruebas rápidas y análisis numéricos más grandes.</div>
         `,
         exercises: [
           {
             id: 'e2_1',
-            title: 'Variables del agua',
-            description: 'Crea 3 variables: <code class="inline">formula &lt;- "H2O"</code>, <code class="inline">masa_molar &lt;- 18.015</code>, <code class="inline">estado &lt;- "líquido"</code>. Imprime únicamente <code class="inline">masa_molar</code>.',
-            expected: '[1] 18.015',
-            hint: 'Escribe masa_molar o print(masa_molar) al final.',
+            title: 'Suma de valores',
+            description: 'Crea <code class="inline">v &lt;- c(1, 2, 3, 4)</code> e imprime la suma total.',
+            expected: '[1] 10',
+            hint: 'v <- c(1,2,3,4); print(sum(v))',
           },
           {
             id: 'e2_2',
-            title: 'Peso molecular del CO₂',
-            description: 'Calcula el peso molecular del CO₂: C=12.011, O=15.999. Guárdalo en <code class="inline">pm_co2</code> e imprímelo.',
-            expected: '[1] 44.009',
-            hint: 'pm_co2 <- 12.011 + 2 * 15.999; print(pm_co2)',
+            title: 'Valor absoluto',
+            description: 'Imprime el valor absoluto de <code class="inline">-14</code> usando <code class="inline">abs()</code>.',
+            expected: '[1] 14',
+            hint: 'print(abs(-14))',
+          },
+        ],
+      },
+      {
+        id: 'vectores',
+        name: 'Vectores, coerción e indexación',
+        theory: `
+          <p>El vector es la estructura más importante de R. Todo lo que no sea un objeto complejo termina comportándose como un vector o como una colección de vectores. Cuando mezclas tipos distintos en un mismo vector, R los convierte al tipo más general.</p>
+          <pre class="code-block">v1 &lt;- c(1, 2, 3)
+v2 &lt;- c("a", "b", "c")
+mezcla &lt;- c(1, "a")   # se convierte en character
+
+v1[2]
+v1[c(1, 3)]
+v1[v1 &gt; 1]</pre>
+          <p>La indexación te permite seleccionar por posición, por nombre o por condición lógica. Eso hace posible filtrar datos sin escribir bucles manuales.</p>
+          <div class="note-box">Si un vector contiene texto, números y lógicos al mismo tiempo, normalmente terminará convertido en texto. A eso se le llama coerción implícita.</div>
+        `,
+        exercises: [
+          {
+            id: 'e2_3',
+            title: 'Crear un vector',
+            description: 'Crea el vector <code class="inline">c(5, 10, 15, 20)</code> e imprime su segundo elemento.',
+            expected: '[1] 10',
+            hint: 'v <- c(5,10,15,20); print(v[2])',
+          },
+          {
+            id: 'e2_4',
+            title: 'Filtrar por condición',
+            description: 'Con el vector <code class="inline">c(2, 8, 1, 9, 4)</code>, imprime solo los valores mayores que 5.',
+            expected: '[1] 8 9',
+            hint: 'v <- c(2,8,1,9,4); print(v[v > 5])',
+          },
+        ],
+      },
+      {
+        id: 'estructuras',
+        name: 'Matrices, arreglos y listas',
+        theory: `
+          <p>Las matrices son vectores con dimensión. En una matriz cada elemento tiene una fila y una columna, por lo que puedes organizar datos numéricos de forma tabular sin recurrir todavía a data frames.</p>
+          <pre class="code-block">M &lt;- matrix(1:9, nrow = 3, ncol = 3)
+M[1, 3]
+t(M)
+
+lista &lt;- list(nombre = "NaCl", masa = 58.44, soluble = TRUE)
+lista$nombre
+lista[[2]]</pre>
+          <p>Las listas son más flexibles que los vectores porque pueden guardar objetos de distinto tipo: números, texto, vectores y hasta otras listas. Son útiles para guardar resultados intermedios o colecciones heterogéneas.</p>
+          <div class="note-box">Cuando necesites mezclar tipos diferentes sin perder información, usa listas. Cuando quieras hacer operaciones numéricas masivas, usa vectores o matrices.</div>
+        `,
+        exercises: [
+          {
+            id: 'e2_5',
+            title: 'Matriz 2x2',
+            description: 'Crea una matriz con los valores <code class="inline">1:4</code> usando <code class="inline">nrow = 2</code>. Imprime el elemento de la fila 2, columna 1.',
+            expected: '[1] 2',
+            hint: 'M <- matrix(1:4, nrow = 2); print(M[2,1])',
+          },
+          {
+            id: 'e2_6',
+            title: 'Acceso a lista',
+            description: 'Crea una lista con <code class="inline">nombre = "agua"</code> y <code class="inline">pH = 7</code>. Imprime el valor de <code class="inline">pH</code>.',
+            expected: '[1] 7',
+            hint: 'x <- list(nombre = "agua", pH = 7); print(x$pH)',
+          },
+        ],
+      },
+      {
+        id: 'texto',
+        name: 'Factores, texto y fechas',
+        theory: `
+          <p>R también trabaja con variables categóricas, texto y fechas. Los factores ayudan a representar categorías con un conjunto fijo de niveles; las cadenas permiten manejar nombres, etiquetas y resultados; y las fechas facilitan el análisis temporal.</p>
+          <pre class="code-block">tipo &lt;- factor(c("ácido", "base", "ácido"))
+texto &lt;- paste("R", "y", "química")
+fecha &lt;- as.Date("2026-04-24")
+
+levels(tipo)
+substr("analítica", 1, 4)
+format(fecha, "%d/%m/%Y")</pre>
+          <p>Funciones útiles aquí: <code class="inline">paste()</code>, <code class="inline">toupper()</code>, <code class="inline">tolower()</code>, <code class="inline">nchar()</code>, <code class="inline">substr()</code>, <code class="inline">as.Date()</code> y <code class="inline">format()</code>.</p>
+          <div class="note-box">En datos reales, texto y fechas suelen necesitar limpieza antes del análisis. Aprender estas funciones te ahorra muchos errores de importación y comparación.</div>
+        `,
+        exercises: [
+          {
+            id: 'e2_7',
+            title: 'Concatenar texto',
+            description: 'Usa <code class="inline">paste()</code> para formar el texto <code class="inline">"R es potente"</code>.',
+            expected: '[1] "R es potente"',
+            hint: 'print(paste("R", "es", "potente"))',
+          },
+          {
+            id: 'e2_8',
+            title: 'Longitud de una cadena',
+            description: 'Imprime la cantidad de caracteres de <code class="inline">"química"</code> con <code class="inline">nchar()</code>.',
+            expected: '[1] 7',
+            hint: 'print(nchar("química"))',
+          },
+        ],
+      },
+      {
+        id: 'funciones',
+        name: 'Funciones propias y depuración básica',
+        theory: `
+          <p>Las funciones te permiten convertir un bloque de instrucciones en una herramienta reutilizable. Una buena función recibe argumentos, hace un cálculo y devuelve un resultado claro.</p>
+          <pre class="code-block">promedio_2 <- function(a, b) {
+  resultado <- (a + b) / 2
+  return(resultado)
+}
+
+media_segura <- function(x) {
+  if (length(x) == 0) {
+    stop("El vector está vacío")
+  }
+  mean(x)
+}</pre>
+          <p>En una función puedes usar <code class="inline">return()</code> para devolver un resultado explícito y <code class="inline">stop()</code> para frenar la ejecución cuando algo no tiene sentido.</p>
+          <div class="note-box">Una función bien escrita evita repetir código, mejora la lectura y hace que los ejercicios grandes sean mucho más fáciles de mantener.</div>
+        `,
+        exercises: [
+          {
+            id: 'e2_9',
+            title: 'Promedio de dos valores',
+            description: 'Crea <code class="inline">promedio_2</code> para devolver el promedio de dos números. Prueba con <code class="inline">promedio_2(10, 6)</code>.',
+            expected: '[1] 8',
+            hint: 'promedio_2 <- function(a, b){ (a + b) / 2 }; print(promedio_2(10, 6))',
+          },
+          {
+            id: 'e2_10',
+            title: 'Función de valor absoluto',
+            description: 'Crea una función <code class="inline">mi_abs(x)</code> que devuelva el valor absoluto de <code class="inline">x</code>. Pruébala con <code class="inline">-9</code>.',
+            expected: '[1] 9',
+            hint: 'mi_abs <- function(x){ abs(x) }; print(mi_abs(-9))',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'mod3',
+    num: '03',
+    name: 'Control de flujo',
+    description: 'Decisiones, ciclos y control de ejecución para resolver problemas paso a paso.',
+    topics: [
+      {
+        id: 'reservadas',
+        name: 'Palabras reservadas del control de flujo',
+        theory: `
+          <p>El control de flujo permite que un programa tome decisiones, repita procesos o corte la ejecución cuando sea necesario. En este módulo vas a usar estructuras que ya forman parte del lenguaje, así que conviene reconocerlas bien desde el inicio.</p>
+          <p><strong>Palabras reservadas y comandos principales:</strong></p>
+          <ul style="padding-left:20px;line-height:2.1;margin:10px 0">
+            <li><code class="inline">if</code> y <code class="inline">else</code> — ejecutan bloques distintos según una condición.</li>
+            <li><code class="inline">for</code> — repite una tarea recorriendo una secuencia.</li>
+            <li><code class="inline">while</code> — repite mientras una condición siga siendo verdadera.</li>
+            <li><code class="inline">repeat</code> — repite indefinidamente hasta que uses <code class="inline">break</code>.</li>
+            <li><code class="inline">break</code> — detiene un bucle.</li>
+            <li><code class="inline">next</code> — salta a la siguiente iteración.</li>
+            <li><code class="inline">switch()</code> — elige entre varias opciones.</li>
+            <li><code class="inline">return()</code> — devuelve un resultado dentro de una función.</li>
+          </ul>
+          <div class="note-box">En control de flujo, la claridad es fundamental: una condición bien escrita vale más que varias líneas difíciles de seguir.</div>
+        `,
+        exercises: [
+          {
+            id: 'e3_1',
+            title: 'Reconoce una condición',
+            description: 'Escribe una condición que imprima <code class="inline">"Aprobado"</code> cuando <code class="inline">nota &gt;= 7</code>. Usa una variable llamada <code class="inline">nota</code> con valor 8.',
+            expected: '[1] "Aprobado"',
+            hint: 'nota <- 8; if (nota >= 7) { print("Aprobado") }',
+          },
+          {
+            id: 'e3_2',
+            title: 'Estructura básica',
+            description: 'Crea una instrucción <code class="inline">if/else</code> que imprima <code class="inline">"Par"</code> cuando <code class="inline">n = 4</code> y <code class="inline">"Impar"</code> en caso contrario.',
+            expected: '[1] "Par"',
+            hint: 'n <- 4; if (n %% 2 == 0) { print("Par") } else { print("Impar") }',
           },
         ],
       },
       {
         id: 'condicionales',
-        name: 'Condicionales',
+        name: 'Condicionales y decisiones',
         theory: `
-          <p>Los condicionales dirigen el flujo del programa según condiciones:</p>
-          <pre class="code-block">pH &lt;- 3.5
+          <p>Las condiciones permiten clasificar datos según rangos, estados o reglas. La estructura <code class="inline">if</code> evalúa una sola condición, mientras que <code class="inline">if else</code> y <code class="inline">ifelse()</code> sirven para construir decisiones más completas.</p>
+          <pre class="code-block">pH &lt;- 3.2
 
 if (pH &lt; 7) {
   print("Ácido")
@@ -103,467 +398,310 @@ if (pH &lt; 7) {
   print("Neutro")
 } else {
   print("Básico")
-}</pre>
-          <p>Operadores de comparación: <code class="inline">==</code> &nbsp;<code class="inline">!=</code> &nbsp;<code class="inline">&lt;</code> &nbsp;<code class="inline">&gt;</code> &nbsp;<code class="inline">&lt;=</code> &nbsp;<code class="inline">&gt;=</code></p>
-          <p style="margin-top:8px">Operadores lógicos: <code class="inline">&amp;</code> (AND) &nbsp;<code class="inline">|</code> (OR) &nbsp;<code class="inline">!</code> (NOT)</p>
-          <pre class="code-block"># ifelse vectorizado
-temperaturas &lt;- c(-5, 20, 105)
-ifelse(temperaturas &gt; 100, "vapor",
-  ifelse(temperaturas &lt; 0, "sólido", "líquido"))</pre>
+}
+
+temperaturas &lt;- c(-5, 10, 25)
+ifelse(temperaturas &gt; 20, "calor", "normal")</pre>
+          <p>Operadores comparativos como <code class="inline">==</code>, <code class="inline">!=</code>, <code class="inline">&lt;</code>, <code class="inline">&gt;</code>, <code class="inline">&lt;=</code> y <code class="inline">&gt;=</code> son la base de cualquier decisión.</p>
+          <div class="note-box">Cuando trabajes con muchas observaciones, <code class="inline">ifelse()</code> suele ser más cómodo que repetir varios <code class="inline">if</code>.</div>
         `,
         exercises: [
           {
-            id: 'e3_1',
-            title: 'Clasificar pH',
-            description: 'Dado <code class="inline">pH &lt;- 2.3</code>, usa if/else para imprimir: "Ácido fuerte" si pH &lt; 3, "Ácido débil" si pH &lt; 7, "No ácido" en otro caso.',
+            id: 'e3_3',
+            title: 'Clasificación de pH',
+            description: 'Con <code class="inline">pH &lt;- 2.8</code>, imprime <code class="inline">"Ácido fuerte"</code> si el valor es menor que 3, <code class="inline">"Ácido débil"</code> si es menor que 7 y <code class="inline">"Neutro o básico"</code> en otro caso.',
             expected: '[1] "Ácido fuerte"',
-            hint: 'if(pH < 3){ print("Ácido fuerte") } else if(pH < 7){ ... }',
+            hint: 'pH <- 2.8; if (pH < 3) { print("Ácido fuerte") } else if (pH < 7) { print("Ácido débil") } else { print("Neutro o básico") }',
           },
           {
-            id: 'e3_2',
-            title: 'Estado del agua',
-            description: 'Dado <code class="inline">temp &lt;- 105</code> (°C), imprime "Vapor" si temp > 100, "Líquido" si 0 ≤ temp ≤ 100, "Sólido" si temp < 0.',
+            id: 'e3_4',
+            title: 'Clasificación de temperatura',
+            description: 'Con <code class="inline">temp &lt;- 105</code>, imprime <code class="inline">"Vapor"</code> si temp es mayor que 100, <code class="inline">"Líquido"</code> si está entre 0 y 100, y <code class="inline">"Sólido"</code> si es menor que 0.',
             expected: '[1] "Vapor"',
-            hint: 'if(temp > 100){ print("Vapor") } else if(temp >= 0){ ... }',
+            hint: 'temp <- 105; if (temp > 100) { print("Vapor") } else if (temp >= 0) { print("Líquido") } else { print("Sólido") }',
           },
         ],
       },
       {
         id: 'bucles',
-        name: 'Bucles',
+        name: 'Bucles: for, while y repeat',
         theory: `
-          <p>Los bucles repiten operaciones de forma eficiente:</p>
-          <pre class="code-block"># for — iterar sobre una secuencia
-for (i in 1:5) {
-  cat(i * 0.5, "\\n")
+          <p>Los bucles sirven para repetir acciones cuando un problema necesita recorrer varios valores. Aunque R prefiere soluciones vectorizadas, los bucles siguen siendo muy útiles para entender la lógica de ejecución y para tareas donde cada paso depende del anterior.</p>
+          <pre class="code-block">for (i in 1:5) {
+  cat(i, "\n")
 }
 
-# while — repetir mientras condición sea TRUE
-n &lt;- 1
-while (n &lt;= 3) {
-  print(n^2)
-  n &lt;- n + 1
+contador &lt;- 1
+while (contador &lt;= 3) {
+  print(contador^2)
+  contador &lt;- contador + 1
 }
 
-# repeat + break
 x &lt;- 0
 repeat {
   x &lt;- x + 1
-  if (x &gt;= 5) break
+  if (x &gt;= 4) break
 }</pre>
-          <div class="note-box">En R se prefieren operaciones vectorizadas sobre bucles. Los bucles son útiles cuando la lógica depende de iteraciones previas.</div>
+          <div class="note-box"><code class="inline">for</code> sirve para recorrer secuencias; <code class="inline">while</code> depende de una condición; y <code class="inline">repeat</code> necesita una salida explícita con <code class="inline">break</code>.</div>
+        `,
+        exercises: [
+          {
+            id: 'e3_5',
+            title: 'Múltiplos con for',
+            description: 'Usa un bucle <code class="inline">for</code> para imprimir los primeros 5 múltiplos de 3.',
+            expected: '3\n6\n9\n12\n15',
+            hint: 'for(i in 1:5){ cat(i*3, "\n") }',
+          },
+          {
+            id: 'e3_6',
+            title: 'Suma acumulada con while',
+            description: 'Calcula la suma de 1 a 5 usando <code class="inline">while</code> e imprime el total final.',
+            expected: '[1] 15',
+            hint: 'total <- 0; i <- 1; while(i <= 5){ total <- total + i; i <- i + 1 }; print(total)',
+          },
+        ],
+      },
+      {
+        id: 'control_extra',
+        name: 'switch(), break y next',
+        theory: `
+          <p>Algunas estructuras de control ayudan a afinar la lógica dentro de un bucle o a elegir una salida entre varias opciones. <code class="inline">switch()</code> es útil cuando tienes una selección discreta de casos; <code class="inline">next</code> salta una iteración; y <code class="inline">break</code> corta el ciclo por completo.</p>
+          <pre class="code-block">opcion &lt;- "b"
+resultado &lt;- switch(opcion,
+  a = "Ácido",
+  b = "Base",
+  c = "Sal"
+)
+
+for (i in 1:5) {
+  if (i == 3) next
+  print(i)
+}</pre>
+          <div class="note-box">Estas herramientas son especialmente útiles cuando limpias datos o recorres listas y quieres ignorar casos que no cumplen una regla.</div>
+        `,
+        exercises: [
+          {
+            id: 'e3_7',
+            title: 'Elegir una opción con switch',
+            description: 'Usa <code class="inline">switch()</code> con <code class="inline">opcion &lt;- "c"</code> para devolver <code class="inline">"Sal"</code>.',
+            expected: '[1] "Sal"',
+            hint: 'opcion <- "c"; print(switch(opcion, a = "Ácido", b = "Base", c = "Sal"))',
+          },
+          {
+            id: 'e3_8',
+            title: 'Saltarse una iteración',
+            description: 'En un <code class="inline">for</code> del 1 al 5, omite el número 3 con <code class="inline">next</code> e imprime los demás.',
+            expected: '1\n2\n4\n5',
+            hint: 'for(i in 1:5){ if(i == 3) next; cat(i, "\n") }',
+          },
+        ],
+      },
+      {
+        id: 'funciones_control',
+        name: 'Funciones con control de flujo y validación',
+        theory: `
+          <p>Una función puede contener decisiones y ciclos para resolver tareas más realistas. Es una forma muy práctica de combinar todo lo aprendido: validación de entradas, repeticiones, salidas tempranas y resultados claros.</p>
+          <pre class="code-block">clasificar_nota &lt;- function(nota) {
+  if (nota &lt; 0 || nota &gt; 10) {
+    stop("La nota debe estar entre 0 y 10")
+  }
+  if (nota &gt;= 7) {
+    return("Aprobado")
+  }
+  "Reprobado"
+}</pre>
+          <div class="note-box">Validar entradas dentro de una función hace que tu código sea más robusto y te ayuda a detectar errores antes de seguir calculando.</div>
+        `,
+        exercises: [
+          {
+            id: 'e3_9',
+            title: 'Clasificar una nota',
+            description: 'Crea una función <code class="inline">clasificar_nota(nota)</code> que devuelva <code class="inline">"Aprobado"</code> si la nota es mayor o igual que 7 y <code class="inline">"Reprobado"</code> en otro caso. Prueba con 8.',
+            expected: '[1] "Aprobado"',
+            hint: 'clasificar_nota <- function(nota){ if(nota >= 7){ return("Aprobado") } "Reprobado" }; print(clasificar_nota(8))',
+          },
+          {
+            id: 'e3_10',
+            title: 'Validación simple',
+            description: 'Crea una función que detenga la ejecución si el valor recibido es negativo y, si no lo es, devuelva el mismo valor. Prueba con <code class="inline">5</code>.',
+            expected: '[1] 5',
+            hint: 'validar <- function(x){ if(x < 0) stop("Negativo") else return(x) }; print(validar(5))',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'mod4',
+    num: '04',
+    name: 'Manipulación de datos',
+    description: 'Trabajo con data frames, tidyverse, dplyr y herramientas útiles para análisis químico.',
+    topics: [
+      {
+        id: 'paquetes',
+        name: 'Descripción del módulo y ecosistema de paquetes',
+        theory: `
+          <p>En este módulo vas a mover, limpiar, resumir y unir datos. El trabajo moderno en R se apoya mucho en el ecosistema <code class="inline">tidyverse</code>, especialmente en <code class="inline">dplyr</code>, <code class="inline">tidyr</code>, <code class="inline">readr</code> y <code class="inline">ggplot2</code>.</p>
+          <p><strong>Comandos y paquetes clave:</strong></p>
+          <ul style="padding-left:20px;line-height:2.1;margin:10px 0">
+            <li><code class="inline">install.packages()</code> — instala paquetes desde CRAN.</li>
+            <li><code class="inline">library()</code> — carga un paquete en la sesión.</li>
+            <li><code class="inline">read_csv()</code> y <code class="inline">read.csv()</code> — importan archivos tabulares.</li>
+            <li><code class="inline">select()</code>, <code class="inline">filter()</code>, <code class="inline">mutate()</code>, <code class="inline">arrange()</code> — transforman columnas y filas.</li>
+            <li><code class="inline">group_by()</code> y <code class="inline">summarise()</code> — agrupan y resumen datos.</li>
+            <li><code class="inline">left_join()</code>, <code class="inline">inner_join()</code> — combinan tablas.</li>
+            <li><code class="inline">pivot_longer()</code> y <code class="inline">pivot_wider()</code> — cambian la forma de la tabla.</li>
+            <li><code class="inline">ChemmineR</code> y <code class="inline">mdatools</code> — útiles en química y quimiometría para trabajar con estructuras moleculares y análisis multivariante.</li>
+          </ul>
+          <div class="note-box">Si tus datos vienen de laboratorio, casi siempre primero tendrás que importarlos, revisarlos, limpiarlos y recién después analizarlos.</div>
         `,
         exercises: [
           {
             id: 'e4_1',
-            title: 'Tabla de diluciones',
-            description: 'Usa un bucle <code class="inline">for</code> para imprimir los primeros 5 múltiplos de 0.5 (0.5, 1, 1.5, 2, 2.5) usando <code class="inline">cat()</code> con salto de línea.',
-            expected: '0.5 \n1 \n1.5 \n2 \n2.5',
-            hint: 'for(i in 1:5){ cat(i*0.5, "\\n") }',
+            title: 'Carga un paquete',
+            description: 'Escribe la instrucción para cargar <code class="inline">dplyr</code> en la sesión.',
+            expected: '[1] "dplyr"',
+            hint: 'library(dplyr)',
           },
           {
             id: 'e4_2',
-            title: 'Suma acumulada',
-            description: 'Calcula la suma de 1 a 10 con un bucle <code class="inline">while</code>. Guárdala en <code class="inline">total</code> e imprímela.',
-            expected: '[1] 55',
-            hint: 'total <- 0; i <- 1; while(i<=10){ total <- total+i; i <- i+1 }; print(total)',
+            title: 'Objeto base',
+            description: 'Crea un data frame llamado <code class="inline">muestras</code> con dos columnas: <code class="inline">id = c(1,2,3)</code> y <code class="inline">valor = c(10,20,30)</code>. Imprime su número de filas.',
+            expected: '[1] 3',
+            hint: 'muestras <- data.frame(id = c(1,2,3), valor = c(10,20,30)); print(nrow(muestras))',
           },
         ],
       },
       {
-        id: 'funciones',
-        name: 'Funciones',
+        id: 'importacion',
+        name: 'Importar, revisar y seleccionar datos',
         theory: `
-          <p>Las funciones encapsulan lógica reutilizable:</p>
-          <pre class="code-block">calcular_moles &lt;- function(masa, masa_molar) {
-  moles &lt;- masa / masa_molar
-  return(moles)
-}
-
-# La última expresión se retorna automáticamente
-densidad &lt;- function(masa, volumen) masa / volumen
-
-# Argumentos con valor por defecto
-concentracion &lt;- function(moles, vol_L = 1.0) {
-  moles / vol_L
-}
-
-calcular_moles(58.44, 58.44) # 1
-concentracion(0.5)           # 0.5 M en 1L</pre>
-        `,
-        exercises: [
-          {
-            id: 'e5_1',
-            title: 'Función de moles',
-            description: 'Crea <code class="inline">moles(masa, molar)</code> que retorne <code class="inline">masa/molar</code>. Llámala con <code class="inline">moles(36.5, 36.5)</code> e imprime.',
-            expected: '[1] 1',
-            hint: 'moles <- function(masa, molar){ return(masa/molar) }; print(moles(36.5, 36.5))',
-          },
-          {
-            id: 'e5_2',
-            title: 'Función de densidad',
-            description: 'Crea <code class="inline">densidad(masa, volumen)</code> que retorne <code class="inline">masa/volumen</code>. Pruébala con <code class="inline">densidad(200, 50)</code> e imprime.',
-            expected: '[1] 4',
-            hint: 'densidad <- function(m, v){ m/v }; print(densidad(200, 50))',
-          },
-        ],
-      },
-    ],
-  },
-
-  // ── MÓDULO 2: R AVANZADO ─────────────────────────────────
-  {
-    id: 'mod2',
-    num: '02',
-    name: 'R AVANZADO',
-    description: 'Estructuras de datos propias de R',
-    topics: [
-      {
-        id: 'vectores',
-        name: 'Vectores y Matrices',
-        theory: `
-          <p>Los vectores son la estructura atómica de R. Todo en R es un vector:</p>
-          <pre class="code-block">pesos &lt;- c(1.008, 4.003, 6.941, 9.012)
-nombres &lt;- c("H", "He", "Li", "Be")
-
-# Operaciones vectorizadas (sin loop)
-pesos * 2
-pesos + 1
-sum(pesos)
-cumsum(pesos)   # suma acumulada
-
-# Matrices
-M &lt;- matrix(1:9, nrow=3, ncol=3)
-M[2, 3]         # fila 2, columna 3
-t(M)            # transpuesta
-M %*% M         # producto matricial</pre>
-          <div class="note-box">Las operaciones vectorizadas son más rápidas que los bucles en R. Úsalas siempre que sea posible.</div>
-        `,
-        exercises: [
-          {
-            id: 'e6_1',
-            title: 'Vector de pesos atómicos',
-            description: 'Crea <code class="inline">pesos &lt;- c(1.008, 12.011, 14.007, 15.999)</code> (H, C, N, O). Calcula e imprime la suma con <code class="inline">sum()</code>.',
-            expected: '[1] 43.025',
-            hint: 'pesos <- c(1.008, 12.011, 14.007, 15.999); print(sum(pesos))',
-          },
-          {
-            id: 'e6_2',
-            title: 'Media de mediciones',
-            description: 'Con el vector <code class="inline">c(2.1, 3.5, 1.8, 4.2, 2.9)</code>, calcula e imprime la media con <code class="inline">mean()</code>.',
-            expected: '[1] 2.9',
-            hint: 'datos <- c(2.1, 3.5, 1.8, 4.2, 2.9); print(mean(datos))',
-          },
-        ],
-      },
-      {
-        id: 'dataframes',
-        name: 'Data Frames',
-        theory: `
-          <p>Los data frames son tablas donde cada columna puede ser de tipo diferente:</p>
-          <pre class="code-block">elementos &lt;- data.frame(
-  simbolo = c("H","C","N","O"),
-  numero  = c(1, 6, 7, 8),
-  masa    = c(1.008, 12.011, 14.007, 15.999),
-  stringsAsFactors = FALSE
+          <p>Importar datos es el punto de entrada de casi cualquier proyecto. Después de leerlos, debes revisar nombres de columnas, tipos de datos, valores faltantes y estructura general antes de transformarlos.</p>
+          <pre class="code-block">datos &lt;- data.frame(
+  muestra = c("A", "B", "C"),
+  ph = c(6.8, 7.2, 5.9),
+  temperatura = c(22, 25, 21)
 )
 
-# Acceso
-elementos$masa       # columna completa
-elementos[2, ]       # fila 2
-elementos[, "masa"]  # también columna masa
-
-# Información
-nrow(elementos); ncol(elementos)
-str(elementos)
-head(elementos, 3)</pre>
+select(datos, muestra, ph)
+filter(datos, ph &lt; 7)
+arrange(datos, ph)</pre>
+          <p>Funciones como <code class="inline">select()</code> y <code class="inline">filter()</code> te ayudan a escoger columnas o filas concretas, mientras que <code class="inline">arrange()</code> ordena según una variable.</p>
+          <div class="note-box">Después de importar, revisa siempre si los nombres de las columnas están correctos y si los tipos quedaron como esperabas.</div>
         `,
         exercises: [
           {
-            id: 'e7_1',
-            title: 'Crear data frame',
-            description: 'Crea <code class="inline">soluciones</code> con columnas: <code class="inline">soluto = c("NaCl","HCl","NaOH")</code> y <code class="inline">concentracion = c(0.5,1.0,0.25)</code>. Imprime <code class="inline">nrow(soluciones)</code>.',
-            expected: '[1] 3',
-            hint: 'soluciones <- data.frame(soluto=c("NaCl","HCl","NaOH"), concentracion=c(0.5,1.0,0.25)); print(nrow(soluciones))',
-          },
-          {
-            id: 'e7_2',
-            title: 'Filtrar con subset',
-            description: 'Con el mismo data frame del ejercicio anterior, usa <code class="inline">subset(soluciones, concentracion &gt; 0.3)</code> e imprímelo.',
-            expected: '  soluto concentracion\n1   NaCl          0.50\n2    HCl          1.00',
-            hint: 'Crea el data frame primero, luego: print(subset(soluciones, concentracion > 0.3))',
-          },
-        ],
-      },
-      {
-        id: 'indexacion',
-        name: 'Indexación',
-        theory: `
-          <p>R ofrece indexación muy flexible:</p>
-          <pre class="code-block">v &lt;- c(10, 20, 30, 40, 50)
-
-v[2]             # 20 — por posición
-v[c(1, 3, 5)]   # 10 30 50 — múltiples
-v[v &gt; 25]       # 30 40 50 — lógica
-v[-1]            # 20 30 40 50 — excluir
-
-# Con nombres
-pesos &lt;- c(H=1.008, C=12.011, N=14.007)
-pesos["C"]       # 12.011
-
-# Data frames
-df[df$pH &lt; 7, ]  # filas donde pH &lt; 7
-df[, c("col1","col3")]  # columnas seleccionadas</pre>
-        `,
-        exercises: [
-          {
-            id: 'e8_1',
-            title: 'Filtrar ácidos',
-            description: 'Dado <code class="inline">pH &lt;- c(2.1, 7.0, 8.5, 3.2, 6.8, 9.1)</code>, imprime los valores menores a 7 (ácidos) usando indexación lógica. Usa <code class="inline">cat()</code>.',
-            expected: '2.1 3.2 6.8',
-            hint: 'pH <- c(2.1,7.0,8.5,3.2,6.8,9.1); cat(pH[pH < 7])',
-          },
-        ],
-      },
-      {
-        id: 'funciones_r',
-        name: 'Funciones Nativas de R',
-        theory: `
-          <p>R tiene un conjunto rico de funciones estadísticas integradas:</p>
-          <pre class="code-block">datos &lt;- c(3.2, 5.1, 2.8, 6.4, 4.0, 3.7)
-
-sum(datos)          # suma
-mean(datos)         # media aritmética
-median(datos)       # mediana
-sd(datos)           # desviación estándar
-var(datos)          # varianza
-min(datos); max(datos)
-range(datos)        # c(min, max)
-length(datos)       # número de elementos
-sort(datos)         # ordenar ascendente
-rev(datos)          # invertir orden
-cumsum(datos)       # suma acumulada
-diff(datos)         # diferencias consecutivas
-round(3.14159, 2)   # redondear: 3.14
-ceiling(3.1)        # 4
-floor(3.9)          # 3</pre>
-        `,
-        exercises: [
-          {
-            id: 'e9_1',
-            title: 'Desviación estándar',
-            description: 'Dado <code class="inline">c(12.3, 14.5, 11.8, 13.2, 15.1, 10.9)</code>, calcula e imprime la desviación estándar con <code class="inline">sd()</code>.',
-            expected: '[1] 1.565248',
-            tolerance: 0.001,
-            hint: 'datos <- c(12.3, 14.5, 11.8, 13.2, 15.1, 10.9); print(sd(datos))',
-          },
-        ],
-      },
-    ],
-  },
-
-  // ── MÓDULO 3: QUÍMICA CON R ──────────────────────────────
-  {
-    id: 'mod3',
-    num: '03',
-    name: 'QUÍMICA CON R',
-    description: 'Análisis de datos en química universitaria',
-    topics: [
-      {
-        id: 'concentraciones',
-        name: 'Concentraciones y Molaridad',
-        theory: `
-          <p>La molaridad (M) = moles de soluto / litros de solución:</p>
-          <pre class="code-block">calcular_molaridad &lt;- function(masa_g, masa_molar, vol_L) {
-  moles     &lt;- masa_g / masa_molar
-  molaridad &lt;- moles / vol_L
-  return(molaridad)
-}
-
-# NaCl: 11.688 g en 1 L de agua
-# Masa molar NaCl = 58.44 g/mol
-M &lt;- calcular_molaridad(11.688, 58.44, 1.0)
-cat("Molaridad:", M, "M\\n")  # 0.2 M
-
-# Ley de dilución: C1*V1 = C2*V2
-C1 &lt;- 2.0;  V2 &lt;- 1.0;  C2 &lt;- 0.5
-V1 &lt;- (C2 * V2) / C1
-cat("Volumen a tomar:", V1 * 1000, "mL\\n")  # 250 mL</pre>
-          <div class="note-box">Siempre verifica unidades: masa en gramos, masa_molar en g/mol, volumen en litros.</div>
-        `,
-        exercises: [
-          {
-            id: 'e10_1',
-            title: 'Molaridad de NaOH',
-            description: 'Calcula la molaridad de 20 g de NaOH (masa molar = 40 g/mol) en 500 mL de solución. Guárdalo en <code class="inline">M</code> e imprímelo.',
-            expected: '[1] 1',
-            hint: 'moles <- 20/40; vol <- 0.5; M <- moles/vol; print(M)',
-          },
-          {
-            id: 'e10_2',
-            title: 'Dilución C₁V₁ = C₂V₂',
-            description: 'Tienes HCl 2M y quieres 0.5M en 1 L. Calcula cuántos mL necesitas tomar (V₁ = C₂·V₂/C₁, luego multiplica por 1000). Imprime el resultado.',
-            expected: '[1] 250',
-            hint: 'C1<-2; C2<-0.5; V2<-1; V1_L<-(C2*V2)/C1; print(V1_L*1000)',
-          },
-        ],
-      },
-      {
-        id: 'ph',
-        name: 'Cálculo de pH',
-        theory: `
-          <p>pH = −log₁₀([H⁺]). R tiene <code class="inline">log10()</code> integrado:</p>
-          <pre class="code-block"># Ácido fuerte (ionización completa)
-H &lt;- 0.001       # [H+] = 10^-3 mol/L
-pH &lt;- -log10(H)  # pH = 3
-cat("pH =", pH, "\\n")
-
-# Ácido débil: HA ⇌ H+ + A-
-# [H+] = sqrt(Ka * C)
-Ka &lt;- 1.8e-5     # Ka del ácido acético
-C  &lt;- 0.1        # 0.1 M
-H_debil  &lt;- sqrt(Ka * C)
-pH_debil &lt;- -log10(H_debil)
-cat("pH acético:", round(pH_debil, 2))  # 2.87
-
-# pOH y pH base
-pOH &lt;- -log10(0.001)  # 3
-pH_base &lt;- 14 - pOH  # 11</pre>
-        `,
-        exercises: [
-          {
-            id: 'e11_1',
-            title: 'pH de HCl',
-            description: 'Calcula el pH de HCl 0.01 M (ácido fuerte). Usa <code class="inline">pH &lt;- -log10(0.01)</code> e imprímelo.',
+            id: 'e4_3',
+            title: 'Filtrar observaciones',
+            description: 'Crea un data frame con <code class="inline">pH = c(6.8, 7.4, 5.5)</code> y muestra solo las filas donde <code class="inline">pH &lt; 7</code>. Imprime cuántas filas quedan.',
             expected: '[1] 2',
-            hint: 'pH <- -log10(0.01); print(pH)',
+            hint: 'df <- data.frame(pH = c(6.8, 7.4, 5.5)); print(nrow(df[df$pH < 7, ]))',
           },
           {
-            id: 'e11_2',
-            title: 'pH de ácido acético',
-            description: 'Calcula el pH de ácido acético 0.1 M (Ka = 1.8e-5). H⁺ = sqrt(Ka·C), luego pH = -log10(H⁺). Imprime redondeado a 2 decimales.',
-            expected: '[1] 2.87',
-            tolerance: 0.01,
-            hint: 'Ka<-1.8e-5; C<-0.1; H<-sqrt(Ka*C); pH<--log10(H); print(round(pH,2))',
+            id: 'e4_4',
+            title: 'Seleccionar columnas',
+            description: 'Crea un data frame con columnas <code class="inline">nombre</code>, <code class="inline">masa</code> y <code class="inline">estado</code>. Imprime solo la columna <code class="inline">masa</code>.',
+            expected: '[1] 1.2 3.4 2.1',
+            hint: 'df <- data.frame(nombre = c("A","B","C"), masa = c(1.2,3.4,2.1), estado = c("s","l","s")); print(df$masa)',
           },
         ],
       },
       {
-        id: 'regresion',
-        name: 'Regresión Lineal',
+        id: 'dplyr',
+        name: 'Transformación con dplyr',
         theory: `
-          <p>La regresión lineal es clave en análisis de datos experimentales (Ley de Beer-Lambert):</p>
-          <pre class="code-block">conc &lt;- c(0.1, 0.2, 0.3, 0.4, 0.5)
-abs  &lt;- c(0.102, 0.198, 0.301, 0.405, 0.498)
-
-modelo &lt;- lm(abs ~ conc)
-summary(modelo)
-
-# Extraer coeficientes
-coef(modelo)           # intercepto y pendiente
-coef(modelo)[2]        # solo pendiente (ε·b)
-
-# R² (coeficiente de determinación)
-summary(modelo)$r.squared
-
-# Predecir absorbancia a conc = 0.25
-predict(modelo, data.frame(conc = 0.25))</pre>
-          <div class="note-box">Ley de Beer-Lambert: A = ε·b·c. La pendiente de la regresión es ε·b (absortividad × longitud de celda).</div>
+          <p><code class="inline">dplyr</code> organiza la manipulación de datos en verbos muy fáciles de leer. El flujo típico es seleccionar, filtrar, crear nuevas variables y ordenar el resultado.</p>
+          <pre class="code-block">datos %&gt;%
+  filter(ph &lt; 7) %&gt;%
+  mutate(poh = 14 - ph) %&gt;%
+  arrange(desc(poh))</pre>
+          <p>Los verbos más importantes son <code class="inline">mutate()</code>, <code class="inline">filter()</code>, <code class="inline">select()</code>, <code class="inline">rename()</code>, <code class="inline">arrange()</code>, <code class="inline">distinct()</code> y <code class="inline">slice()</code>. Con ellos puedes construir pipelines muy claros.</p>
+          <div class="note-box">El operador <code class="inline">%&gt;%</code> conecta pasos. Eso hace que tu análisis se lea de arriba hacia abajo como una receta.</div>
         `,
         exercises: [
           {
-            id: 'e12_1',
-            title: 'Curva de calibración',
-            description: 'Ajusta una regresión lineal con:<br><code class="inline">conc &lt;- c(0,0.2,0.4,0.6,0.8,1.0)</code><br><code class="inline">abs  &lt;- c(0,0.195,0.401,0.596,0.800,1.002)</code><br>Imprime <code class="inline">round(summary(modelo)$r.squared, 4)</code>.',
-            expected: '[1] 1',
+            id: 'e4_5',
+            title: 'Crear una nueva variable',
+            description: 'Con <code class="inline">ph &lt;- c(6, 8)</code>, calcula <code class="inline">poh = 14 - ph</code> y imprime el resultado.',
+            expected: '[1] 8 6',
+            hint: 'ph <- c(6,8); print(14 - ph)',
+          },
+          {
+            id: 'e4_6',
+            title: 'Ordenar resultados',
+            description: 'Crea el vector <code class="inline">c(5, 1, 9, 3)</code> y ordénalo de menor a mayor.',
+            expected: '[1] 1 3 5 9',
+            hint: 'v <- c(5,1,9,3); print(sort(v))',
+          },
+        ],
+      },
+      {
+        id: 'agrupacion',
+        name: 'Agrupación, resúmenes y joins',
+        theory: `
+          <p>Una parte esencial de la manipulación de datos es resumir por grupos. Con <code class="inline">group_by()</code> y <code class="inline">summarise()</code> puedes obtener medias, conteos y totales por categoría. Con los joins puedes unir tablas que comparten una clave.</p>
+          <pre class="code-block">datos &lt;- data.frame(
+  grupo = c("A", "A", "B", "B"),
+  valor = c(10, 12, 20, 22)
+)
+
+datos %&gt;%
+  group_by(grupo) %&gt;%
+  summarise(promedio = mean(valor))
+
+left_join(tabla1, tabla2, by = "id")</pre>
+          <div class="note-box">Agrupar y resumir es ideal para informes. Un join, en cambio, es útil cuando parte de la información está repartida en varias tablas.</div>
+        `,
+        exercises: [
+          {
+            id: 'e4_7',
+            title: 'Promedio por grupo',
+            description: 'Con un data frame que tenga <code class="inline">grupo = c("A", "A", "B", "B")</code> y <code class="inline">valor = c(10, 14, 20, 26)</code>, calcula el promedio del grupo A.',
+            expected: '[1] 12',
+            hint: 'df <- data.frame(grupo = c("A","A","B","B"), valor = c(10,14,20,26)); print(mean(df$valor[df$grupo == "A"]))',
+          },
+          {
+            id: 'e4_8',
+            title: 'Conteo de filas',
+            description: 'Crea una tabla con 6 observaciones repartidas entre dos grupos e imprime cuántas filas pertenecen al grupo B.',
+            expected: '[1] 3',
+            hint: 'df <- data.frame(grupo = c("A","A","A","B","B","B"), valor = 1:6); print(sum(df$grupo == "B"))',
+          },
+        ],
+      },
+      {
+        id: 'quimica',
+        name: 'Flujo de trabajo para química y exportación',
+        theory: `
+          <p>En química suele haber tablas con concentraciones, absorbancias, pH, tiempos y réplicas. El flujo de trabajo normal es importar, revisar, limpiar, transformar, resumir y exportar. Si además trabajas con quimiometría o estructuras moleculares, paquetes como <code class="inline">ChemmineR</code> y <code class="inline">mdatools</code> pueden complementar el análisis.</p>
+          <pre class="code-block"># Ejemplo de tabla de laboratorio
+lab &lt;- data.frame(
+  muestra = c("M1", "M2", "M3"),
+  conc = c(0.1, 0.2, 0.3),
+  abs = c(0.102, 0.198, 0.301)
+)
+
+lab %&gt;%
+  mutate(ratio = abs / conc) %&gt;%
+  summarise(promedio_ratio = mean(ratio))</pre>
+          <p>Para exportar, puedes usar <code class="inline">write.csv()</code> o funciones equivalentes de <code class="inline">readr</code>. Mantener los datos limpios desde el principio evita errores al reportar resultados finales.</p>
+          <div class="note-box">En análisis químico, conservar unidades, nombres de muestras y metadatos es tan importante como calcular el resultado numérico.</div>
+        `,
+        exercises: [
+          {
+            id: 'e4_9',
+            title: 'Razón absorbancia/concentración',
+            description: 'Con <code class="inline">conc = c(0.1, 0.2)</code> y <code class="inline">abs = c(0.101, 0.198)</code>, calcula la razón <code class="inline">abs/conc</code> y imprime el promedio.',
+            expected: '[1] 0.9975',
             tolerance: 0.001,
-            hint: 'conc<-c(0,0.2,0.4,0.6,0.8,1.0); abs<-c(0,0.195,0.401,0.596,0.800,1.002); modelo<-lm(abs~conc); print(round(summary(modelo)$r.squared,4))',
+            hint: 'conc <- c(0.1,0.2); abs <- c(0.101,0.198); print(mean(abs/conc))',
           },
           {
-            id: 'e12_2',
-            title: 'Predicción de concentración',
-            description: 'Con el mismo modelo anterior, predice la absorbancia cuando <code class="inline">conc = 0.35</code> usando <code class="inline">predict()</code>. Imprime redondeado a 3 decimales.',
-            expected: '[1] 0.351',
-            tolerance: 0.005,
-            hint: 'Después del lm(), usa: print(round(predict(modelo, data.frame(conc=0.35)), 3))',
-          },
-        ],
-      },
-      {
-        id: 'estadistica',
-        name: 'Estadística Experimental',
-        theory: `
-          <p>El análisis estadístico de mediciones repetidas es fundamental en química analítica:</p>
-          <pre class="code-block">datos &lt;- c(14.23, 14.27, 14.19, 14.25, 14.22)
-
-media &lt;- mean(datos)
-desv  &lt;- sd(datos)
-n     &lt;- length(datos)
-SEM   &lt;- desv / sqrt(n)   # error estándar
-
-# Intervalo de confianza 95%
-t_crit &lt;- qt(0.975, df = n - 1)
-IC &lt;- c(media - t_crit*SEM, media + t_crit*SEM)
-cat("IC 95%:", round(IC, 4), "\\n")
-
-# Coeficiente de variación (%)
-CV &lt;- (desv / media) * 100
-cat("CV:", round(CV, 2), "%\\n")
-
-# Test t de una muestra
-t.test(datos, mu = 14.2)</pre>
-        `,
-        exercises: [
-          {
-            id: 'e13_1',
-            title: 'Coeficiente de variación',
-            description: 'Para las mediciones <code class="inline">c(9.81, 9.79, 9.83, 9.78, 9.82, 9.80)</code>, calcula e imprime el CV = (sd/mean)×100. Redondea a 2 decimales.',
-            expected: '[1] 0.2',
-            tolerance: 0.05,
-            hint: 'm<-c(9.81,9.79,9.83,9.78,9.82,9.80); cv<-(sd(m)/mean(m))*100; print(round(cv,2))',
-          },
-          {
-            id: 'e13_2',
-            title: 'Test t de hipótesis',
-            description: 'Con las mediciones <code class="inline">c(7.1, 7.3, 6.9, 7.2, 7.0)</code>, usa <code class="inline">t.test(x, mu=7)</code> e imprime el p-value redondeado a 3 decimales.',
-            expected: '[1] 0.777',
-            tolerance: 0.005,
-            hint: 'x<-c(7.1,7.3,6.9,7.2,7.0); r<-t.test(x,mu=7); print(round(r$p.value,3))',
-          },
-        ],
-      },
-      {
-        id: 'cinetica',
-        name: 'Cinética Química',
-        theory: `
-          <p>Análisis de datos cinéticos con R — ajuste de orden de reacción:</p>
-          <pre class="code-block"># Datos cinéticos: [A] vs tiempo
-tiempo &lt;- c(0, 10, 20, 30, 40, 50)
-A      &lt;- c(1.000, 0.819, 0.670, 0.549, 0.449, 0.368)
-
-# Orden 1: ln[A] = ln[A0] - k*t  (linealizar)
-lnA &lt;- log(A)
-modelo1 &lt;- lm(lnA ~ tiempo)
-k &lt;- -coef(modelo1)[2]   # constante de velocidad
-cat("k (orden 1):", round(k, 4), "s^-1\\n")
-
-# t1/2 para reacción de orden 1
-t_medio &lt;- log(2) / k
-cat("t1/2:", round(t_medio, 2), "s\\n")
-
-# Graficar
-plot(tiempo, lnA, main="Cinética orden 1",
-     xlab="Tiempo (s)", ylab="ln[A]")
-abline(modelo1, col="red")</pre>
-        `,
-        exercises: [
-          {
-            id: 'e14_1',
-            title: 'Constante de velocidad',
-            description: 'Usando:<br><code class="inline">tiempo &lt;- c(0,10,20,30,40,50)</code><br><code class="inline">A &lt;- c(1.000,0.819,0.670,0.549,0.449,0.368)</code><br>Calcula k de la reacción de orden 1 (k = -pendiente de lm(log(A)~tiempo)). Imprime redondeado a 4 decimales.',
-            expected: '[1] 0.02',
-            tolerance: 0.002,
-            hint: 'modelo<-lm(log(A)~tiempo); k<- -coef(modelo)[2]; print(round(k,4))',
+            id: 'e4_10',
+            title: 'Exportación simulada',
+            description: 'Crea un data frame con dos columnas y usa <code class="inline">nrow()</code> para confirmar cuántas observaciones contiene antes de exportarlo.',
+            expected: '[1] 2',
+            hint: 'df <- data.frame(muestra = c("X1","X2"), valor = c(5,6)); print(nrow(df))',
           },
         ],
       },
